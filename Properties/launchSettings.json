@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Radius (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "Radius (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

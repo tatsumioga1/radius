@@ -1,0 +1,15 @@
+.vs/
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build/package artifacts
+AppPackages/
+BundleArtifacts/
+TestResults/
+
+# Logs
+*.log
