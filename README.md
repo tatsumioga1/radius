@@ -24,3 +24,7 @@ dotnet build -c Release
 ## Website
 
 The promotional site lives in `website/` and is intended for `radius.northwindlab.website`.
+
+## Microsoft Store
+
+Store submission notes, including the `runFullTrust` restricted-capability justification, live in `docs/microsoft-store-submission.md`.
