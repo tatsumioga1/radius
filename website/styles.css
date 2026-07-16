@@ -43,6 +43,7 @@ a {
   background: rgba(13, 18, 30, 0.74);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(18px);
+  animation: headerDrop 700ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 
 .brand,
@@ -61,6 +62,11 @@ footer {
 
 .brand img {
   border-radius: 7px;
+  transition: transform 180ms ease;
+}
+
+.brand:hover img {
+  transform: rotate(-8deg) scale(1.06);
 }
 
 nav {
@@ -71,6 +77,7 @@ nav {
 
 nav a {
   text-decoration: none;
+  transition: color 180ms ease;
 }
 
 nav a:hover {
@@ -99,12 +106,29 @@ nav a:hover {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  animation: heroDrift 18s ease-in-out infinite alternate;
 }
 
 .hero-copy {
   position: relative;
   z-index: 1;
   max-width: 760px;
+}
+
+.hero-copy > * {
+  animation: riseIn 760ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.hero-copy > :nth-child(2) {
+  animation-delay: 90ms;
+}
+
+.hero-copy > :nth-child(3) {
+  animation-delay: 170ms;
+}
+
+.hero-copy > :nth-child(4) {
+  animation-delay: 250ms;
 }
 
 .eyebrow {
@@ -152,16 +176,40 @@ h1 {
   border-radius: 6px;
   font-weight: 700;
   text-decoration: none;
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.button:hover {
+  transform: translateY(-2px);
+}
+
+.button:active {
+  transform: translateY(0);
 }
 
 .button.primary {
   background: var(--accent);
   color: var(--ink);
+  box-shadow: 0 16px 40px rgba(49, 199, 196, 0.22);
+}
+
+.button.primary:hover {
+  background: #92fff9;
+  box-shadow: 0 20px 52px rgba(49, 199, 196, 0.32);
 }
 
 .button.secondary {
   background: rgba(255, 255, 255, 0.09);
   border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.button.secondary:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.22);
 }
 
 .section {
@@ -192,6 +240,16 @@ article {
   background: var(--panel);
   border: 1px solid var(--panel-border);
   border-radius: 8px;
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    transform 180ms ease;
+}
+
+article:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(116, 238, 232, 0.26);
+  transform: translateY(-4px);
 }
 
 h3 {
@@ -228,6 +286,7 @@ footer a {
   min-height: calc(100svh - 88px);
   margin: 0 auto;
   padding: 124px 0 72px;
+  animation: riseIn 680ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 
 .policy h1 {
@@ -270,6 +329,85 @@ footer a {
 .updated {
   margin-top: 34px;
   font-size: 14px;
+}
+
+@keyframes headerDrop {
+  from {
+    opacity: 0;
+    transform: translateY(-14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes riseIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes heroDrift {
+  from {
+    transform: scale(1.01) translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: scale(1.055) translate3d(1.4%, -1.2%, 0);
+  }
+}
+
+@supports (animation-timeline: view()) {
+  .section-heading,
+  .feature-grid article,
+  .compact > * {
+    animation: revealOnScroll linear both;
+    animation-timeline: view();
+    animation-range: entry 8% cover 34%;
+  }
+
+  .feature-grid article:nth-child(2) {
+    animation-range: entry 12% cover 38%;
+  }
+
+  .feature-grid article:nth-child(3) {
+    animation-range: entry 16% cover 42%;
+  }
+}
+
+@keyframes revealOnScroll {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 1ms !important;
+  }
 }
 
 @media (max-width: 780px) {
