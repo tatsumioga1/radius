@@ -28,23 +28,28 @@ Stop it with:
 docker compose down
 ```
 
-## Cloudflare Tunnel Deployment
+## Oracle Cloudflare Tunnel Deployment
 
 Recommended shape on the Oracle instance:
 
 1. Copy the `website` folder to the server, for example `~/radius/website`.
-2. Run the Docker container. It listens on `127.0.0.1:8080`.
-3. Point `cloudflared` at `http://localhost:8080`.
+2. Run the Docker container on the existing `aura-home_default` Docker network.
+3. Point the existing Cloudflare Tunnel public hostname at `http://radius-site:8080`.
 
 Example server commands:
 
 ```bash
 mkdir -p ~/radius
 cd ~/radius/website
-docker compose up -d --build
+docker compose -f docker-compose.oracle.yml up -d --build
 ```
 
-Example `cloudflared` ingress:
+For the existing remotely-managed `aura-home-tunnel-1` container, add this public hostname in Cloudflare Zero Trust:
+
+- Hostname: `radius.northwindlab.website`
+- Service: `http://radius-site:8080`
+
+If you later switch to a local `cloudflared` config file, the equivalent ingress is:
 
 ```yaml
 tunnel: <your-tunnel-id>
