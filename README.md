@@ -23,7 +23,7 @@ dotnet build -c Release
 
 ## Website
 
-The promotional site lives in `website/` and is intended for `radius.northwindlab.website`.
+The promotional site is hosted at `https://radius.northwindlab.website`.
 
 ## Microsoft Store
 

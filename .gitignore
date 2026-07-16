@@ -13,3 +13,6 @@ TestResults/
 
 # Logs
 *.log
+
+# Website source/deployment files are kept outside the public app repo.
+website/
