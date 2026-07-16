@@ -1,4 +1,4 @@
-namespace Radius.Interop;
+namespace Roundly.Interop;
 
 public readonly record struct MonitorBounds(int Left, int Top, int Right, int Bottom)
 {

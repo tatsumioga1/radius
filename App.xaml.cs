@@ -1,9 +1,9 @@
 using Microsoft.UI.Xaml;
-using Radius.Services;
-using Radius.Interop;
+using Roundly.Services;
+using Roundly.Interop;
 using WinRT.Interop;
 
-namespace Radius;
+namespace Roundly;
 
 public sealed partial class App : Application
 {

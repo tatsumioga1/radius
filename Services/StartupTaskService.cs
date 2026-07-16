@@ -1,10 +1,10 @@
 using Windows.ApplicationModel;
 
-namespace Radius.Services;
+namespace Roundly.Services;
 
 public sealed class StartupTaskService
 {
-    private const string StartupTaskId = "RadiusStartup";
+    private const string StartupTaskId = "RoundlyStartup";
 
     public async Task<bool> IsEnabledAsync()
     {

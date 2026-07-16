@@ -1,10 +1,10 @@
 using System.Runtime.InteropServices;
 
-namespace Radius.Interop;
+namespace Roundly.Interop;
 
 internal sealed class CornerOverlayWindow : IDisposable
 {
-    private const string WindowClassName = "RadiusCornerOverlayWindow";
+    private const string WindowClassName = "RoundlyCornerOverlayWindow";
     private static readonly NativeMethods.WindowProc WndProc = (hWnd, message, wParam, lParam) =>
         NativeMethods.DefWindowProc(hWnd, message, wParam, lParam);
 
@@ -28,7 +28,7 @@ internal sealed class CornerOverlayWindow : IDisposable
             | NativeMethods.WsExTopmost
             | NativeMethods.WsExNoActivate,
             WindowClassName,
-            "Radius corner",
+            "Roundly corner",
             NativeMethods.WsPopup,
             x,
             y,

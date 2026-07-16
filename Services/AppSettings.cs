@@ -1,12 +1,12 @@
 using System.Text.Json;
 
-namespace Radius.Services;
+namespace Roundly.Services;
 
 public sealed class AppSettings
 {
     private static readonly string SettingsDirectory = Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-        "Radius");
+        "Roundly");
 
     private static readonly string SettingsPath = Path.Combine(SettingsDirectory, "settings.json");
 

@@ -1,11 +1,11 @@
 <Window
-    x:Class="Radius.MainWindow"
+    x:Class="Roundly.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Title="Radius">
+    Title="Roundly">
     <Grid
         x:Name="RootGrid"
         Background="Transparent"
@@ -27,7 +27,7 @@
                 VerticalAlignment="Center" />
             <TextBlock
                 Grid.Column="1"
-                Text="Radius"
+                Text="Roundly"
                 FontSize="13"
                 VerticalAlignment="Center" />
         </Grid>
@@ -47,7 +47,7 @@
             </Grid.RowDefinitions>
 
             <StackPanel Spacing="4">
-                <TextBlock Text="Radius" FontSize="24" FontWeight="SemiBold" />
+                <TextBlock Text="Roundly" FontSize="24" FontWeight="SemiBold" />
                 <TextBlock Text="Soften the four physical screen corners with native click-through overlays." Opacity="0.72" TextWrapping="Wrap" />
             </StackPanel>
 
@@ -88,7 +88,7 @@
 
             <TextBlock
                 Grid.Row="4"
-                Text="Tip: keep the radius close to your display's actual corner curve. Closing or hiding this window keeps Radius running in the notification area."
+                Text="Tip: keep the radius close to your display's actual corner curve. Closing or hiding this window keeps Roundly running in the notification area."
                 Opacity="0.68"
                 TextWrapping="Wrap" />
 

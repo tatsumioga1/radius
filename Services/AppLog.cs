@@ -1,11 +1,11 @@
-namespace Radius.Services;
+namespace Roundly.Services;
 
 public static class AppLog
 {
     private static readonly object SyncRoot = new();
     private static readonly string LogDirectory = Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-        "Radius");
+        "Roundly");
 
     public static readonly string LogPath = Path.Combine(LogDirectory, "startup.log");
 
@@ -18,7 +18,7 @@ public static class AppLog
                 Directory.CreateDirectory(LogDirectory);
                 File.AppendAllText(LogPath, $"{DateTimeOffset.Now:O} {message}{Environment.NewLine}");
                 File.AppendAllText(
-                    Path.Combine(Path.GetTempPath(), "Radius-startup.log"),
+                    Path.Combine(Path.GetTempPath(), "Roundly-startup.log"),
                     $"{DateTimeOffset.Now:O} {message}{Environment.NewLine}");
             }
         }

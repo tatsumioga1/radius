@@ -1,7 +1,7 @@
 using System.Runtime.InteropServices;
-using Radius.Interop;
+using Roundly.Interop;
 
-namespace Radius.Services;
+namespace Roundly.Services;
 
 public sealed class TrayIconService : IDisposable
 {
@@ -10,7 +10,7 @@ public sealed class TrayIconService : IDisposable
     private const int CommandEnabled = 101;
     private const int CommandStartup = 102;
     private const int CommandExit = 103;
-    private const string WindowClassName = "RadiusTrayMessageWindow";
+    private const string WindowClassName = "RoundlyTrayMessageWindow";
 
     private static readonly NativeMethods.WindowProc WndProc = OnWindowMessage;
     private static TrayIconService? _current;
@@ -46,7 +46,7 @@ public sealed class TrayIconService : IDisposable
         _windowHandle = NativeMethods.CreateWindowEx(
             0,
             WindowClassName,
-            "Radius tray",
+            "Roundly tray",
             0,
             0,
             0,
@@ -185,7 +185,7 @@ public sealed class TrayIconService : IDisposable
             uFlags = NativeMethods.NifMessage | NativeMethods.NifIcon | NativeMethods.NifTip | NativeMethods.NifShowTip,
             uCallbackMessage = NativeMethods.WmAppTray,
             hIcon = _iconHandle,
-            szTip = "Radius",
+            szTip = "Roundly",
             szInfo = string.Empty,
             szInfoTitle = string.Empty
         };
@@ -201,13 +201,13 @@ public sealed class TrayIconService : IDisposable
 
         try
         {
-            NativeMethods.AppendMenu(menu, NativeMethods.MfString, CommandSettings, "Open Radius");
+            NativeMethods.AppendMenu(menu, NativeMethods.MfString, CommandSettings, "Open Roundly");
             var enabledFlags = NativeMethods.MfString | (_isEnabled() ? NativeMethods.MfChecked : 0);
             NativeMethods.AppendMenu(menu, (uint)enabledFlags, CommandEnabled, "Enabled");
             var startupFlags = NativeMethods.MfString | (_isStartupEnabled() ? NativeMethods.MfChecked : 0);
             NativeMethods.AppendMenu(menu, (uint)startupFlags, CommandStartup, "Open on startup");
             NativeMethods.AppendMenu(menu, NativeMethods.MfSeparator, 0, null);
-            NativeMethods.AppendMenu(menu, NativeMethods.MfString, CommandExit, "Exit Radius");
+            NativeMethods.AppendMenu(menu, NativeMethods.MfString, CommandExit, "Exit Roundly");
 
             NativeMethods.GetCursorPos(out var cursor);
             NativeMethods.SetForegroundWindow(_windowHandle);

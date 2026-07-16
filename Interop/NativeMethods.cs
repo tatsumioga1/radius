@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices;
 
-namespace Radius.Interop;
+namespace Roundly.Interop;
 
 internal static partial class NativeMethods
 {

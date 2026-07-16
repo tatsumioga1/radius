@@ -1,10 +1,10 @@
-# Radius
+# Roundly
 
-Radius is a native Windows utility built with WinUI 3 and Windows App SDK. It lives in the notification area and draws four tiny click-through, topmost overlays at each monitor corner so sharp physical display edges visually match Windows' rounded design language.
+Roundly is a native Windows utility built with WinUI 3 and Windows App SDK. It lives in the notification area and draws four tiny click-through, topmost overlays at each monitor corner so sharp physical display edges visually match Windows' rounded design language.
 
 ## Run
 
-Open `Radius.sln` in Visual Studio and run or deploy the `Radius` project for `x64`.
+Open `Roundly.sln` in Visual Studio and run or deploy the `Roundly` project for `x64`.
 
 You can also build from a Developer PowerShell:
 
@@ -18,12 +18,12 @@ dotnet build -c Release
 - The project uses MSIX tooling so Visual Studio can install/deploy it during testing.
 - The taskbar remains clean; the app is controlled from the notification area.
 - Corner overlays are click-through and do not activate, resize, move, or clip other app windows.
-- Radius and enabled state are saved under `%AppData%\Radius\settings.json`.
+- Roundly and enabled state are saved under `%AppData%\Roundly\settings.json`.
 - The overlay updates on startup, settings changes, and foreground app changes.
 
 ## Website
 
-The promotional site is hosted at `https://radius.northwindlab.website`.
+The promotional site is hosted at `https://roundly.northwindlab.website`.
 
 ## Microsoft Store
 

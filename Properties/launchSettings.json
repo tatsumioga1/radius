@@ -1,9 +1,9 @@
 {
   "profiles": {
-    "Radius (Package)": {
+    "Roundly (Package)": {
       "commandName": "MsixPackage"
     },
-    "Radius (Unpackaged)": {
+    "Roundly (Unpackaged)": {
       "commandName": "Project"
     }
   }

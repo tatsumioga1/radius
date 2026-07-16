@@ -3,11 +3,11 @@ using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
-using Radius.Interop;
-using Radius.Services;
+using Roundly.Interop;
+using Roundly.Services;
 using WinRT.Interop;
 
-namespace Radius;
+namespace Roundly;
 
 public sealed partial class MainWindow : Window
 {
@@ -59,7 +59,7 @@ public sealed partial class MainWindow : Window
         var appWindow = AppWindow.GetFromWindowId(windowId);
         _appWindow = appWindow;
         appWindow.Resize(new Windows.Graphics.SizeInt32(560, 460));
-        appWindow.Title = "Radius";
+        appWindow.Title = "Roundly";
         appWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, "Assets", "AppIcon.ico"));
         appWindow.Closing += AppWindow_Closing;
         ApplyTitleBarTheme();

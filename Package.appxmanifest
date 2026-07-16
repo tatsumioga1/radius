@@ -7,13 +7,13 @@
   IgnorableNamespaces="uap desktop rescap">
 
   <Identity
-    Name="Radius"
-    Publisher="CN=Radius"
+    Name="Roundly"
+    Publisher="CN=Roundly"
     Version="1.0.0.0" />
 
   <Properties>
-    <DisplayName>Radius</DisplayName>
-    <PublisherDisplayName>Radius</PublisherDisplayName>
+    <DisplayName>Roundly</DisplayName>
+    <PublisherDisplayName>Roundly</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
@@ -28,7 +28,7 @@
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="$targetentrypoint$">
       <uap:VisualElements
-        DisplayName="Radius"
+        DisplayName="Roundly"
         Description="Rounds the four physical screen edges with click-through overlays."
         BackgroundColor="transparent"
         Square150x150Logo="Assets\Square150x150Logo.png"
@@ -42,9 +42,9 @@
           Executable="$targetnametoken$.exe"
           EntryPoint="Windows.FullTrustApplication">
           <desktop:StartupTask
-            TaskId="RadiusStartup"
+            TaskId="RoundlyStartup"
             Enabled="false"
-            DisplayName="Radius" />
+            DisplayName="Roundly" />
         </desktop:Extension>
       </Extensions>
     </Application>

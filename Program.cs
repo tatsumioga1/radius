@@ -1,8 +1,8 @@
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
-using Radius.Services;
+using Roundly.Services;
 
-namespace Radius;
+namespace Roundly;
 
 public static class Program
 {

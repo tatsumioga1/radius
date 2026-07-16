@@ -1,7 +1,7 @@
 using Microsoft.UI.Dispatching;
-using Radius.Interop;
+using Roundly.Interop;
 
-namespace Radius.Services;
+namespace Roundly.Services;
 
 public sealed class CornerOverlayService : IDisposable
 {
