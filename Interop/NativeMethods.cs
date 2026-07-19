@@ -33,6 +33,12 @@ internal static partial class NativeMethods
     public const int TpmRightButton = 0x00000002;
 
     public const uint EventSystemForeground = 0x0003;
+    public const uint EventSystemMinimizeEnd = 0x0017;
+    public const uint EventObjectShow = 0x8002;
+    public const uint EventObjectHide = 0x8003;
+    public const uint EventObjectReorder = 0x8004;
+    public const uint EventObjectLocationChange = 0x800B;
+    public const int ObjIdWindow = 0;
     public const uint WineventOutofcontext = 0x0000;
 
     public const int AcSrcOver = 0x00;
@@ -45,6 +51,10 @@ internal static partial class NativeMethods
     public const int SwRestore = 9;
     public const int SwShownoactivate = 4;
 
+    public const uint SwpNoSize = 0x0001;
+    public const uint SwpNoMove = 0x0002;
+    public const uint SwpNoActivate = 0x0010;
+    public const uint SwpShowWindow = 0x0040;
     public const int WsPopup = unchecked((int)0x80000000);
     public const int WsExLayered = 0x00080000;
     public const int WsExTransparent = 0x00000020;

@@ -45,7 +45,7 @@ internal sealed class CornerOverlayWindow : IDisposable
         }
 
         Paint(handle, x, y, radius, corner);
-        NativeMethods.SetWindowPos(handle, NativeMethods.HwndTopmost, x, y, radius, radius, 0x0010);
+        NativeMethods.SetWindowPos(handle, NativeMethods.HwndTopmost, x, y, radius, radius, NativeMethods.SwpNoActivate | NativeMethods.SwpShowWindow);
         NativeMethods.ShowWindow(handle, NativeMethods.SwShownoactivate);
 
         return new CornerOverlayWindow(handle);
@@ -69,6 +69,7 @@ internal sealed class CornerOverlayWindow : IDisposable
             return;
         }
 
+        NativeMethods.ShowWindow(_handle, NativeMethods.SwShownoactivate);
         NativeMethods.SetWindowPos(
             _handle,
             NativeMethods.HwndTopmost,
@@ -76,7 +77,7 @@ internal sealed class CornerOverlayWindow : IDisposable
             0,
             0,
             0,
-            0x0001 | 0x0002 | 0x0010);
+            NativeMethods.SwpNoMove | NativeMethods.SwpNoSize | NativeMethods.SwpNoActivate | NativeMethods.SwpShowWindow);
     }
 
     private static void EnsureWindowClass()

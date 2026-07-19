@@ -5,12 +5,16 @@ namespace Roundly.Services;
 
 public sealed class CornerOverlayService : IDisposable
 {
+    private const int RecoveryBurstCount = 8;
+
     private readonly AppSettings _settings;
     private readonly List<CornerOverlayWindow> _windows = [];
     private readonly DispatcherQueue _dispatcherQueue;
-    private readonly NativeMethods.WinEventProc _foregroundChanged;
-    private readonly nint _foregroundHook;
-    private long _lastKeepVisibleTicks;
+    private readonly DispatcherQueueTimer _visibilityTimer;
+    private readonly NativeMethods.WinEventProc _windowChanged;
+    private readonly nint[] _eventHooks;
+    private long _lastRefreshRequestTicks;
+    private int _remainingRecoveryTicks;
     private string _lastSignature = string.Empty;
     private bool _disposed;
 
@@ -18,15 +22,11 @@ public sealed class CornerOverlayService : IDisposable
     {
         _settings = settings;
         _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
-        _foregroundChanged = OnForegroundChanged;
-        _foregroundHook = NativeMethods.SetWinEventHook(
-            NativeMethods.EventSystemForeground,
-            NativeMethods.EventSystemForeground,
-            nint.Zero,
-            _foregroundChanged,
-            0,
-            0,
-            NativeMethods.WineventOutofcontext);
+        _visibilityTimer = _dispatcherQueue.CreateTimer();
+        _visibilityTimer.Interval = TimeSpan.FromMilliseconds(125);
+        _visibilityTimer.Tick += OnVisibilityTimerTick;
+        _windowChanged = OnWindowChanged;
+        _eventHooks = RegisterEventHooks(_windowChanged);
     }
 
     public void Apply()
@@ -40,6 +40,7 @@ public sealed class CornerOverlayService : IDisposable
         var signature = CreateSignature(monitors);
         if (signature == _lastSignature)
         {
+            RequestVisibilityRefresh();
             return;
         }
 
@@ -73,6 +74,8 @@ public sealed class CornerOverlayService : IDisposable
                 throw;
             }
         }
+
+        RequestVisibilityRefresh();
     }
 
     public void Dispose()
@@ -83,15 +86,48 @@ public sealed class CornerOverlayService : IDisposable
         }
 
         _disposed = true;
-        if (_foregroundHook != nint.Zero)
+        _visibilityTimer.Stop();
+
+        foreach (var hook in _eventHooks)
         {
-            NativeMethods.UnhookWinEvent(_foregroundHook);
+            if (hook != nint.Zero)
+            {
+                NativeMethods.UnhookWinEvent(hook);
+            }
         }
 
         Clear();
     }
 
-    private void OnForegroundChanged(
+    private static nint[] RegisterEventHooks(NativeMethods.WinEventProc callback)
+    {
+        var events = new[]
+        {
+            NativeMethods.EventSystemForeground,
+            NativeMethods.EventSystemMinimizeEnd,
+            NativeMethods.EventObjectShow,
+            NativeMethods.EventObjectHide,
+            NativeMethods.EventObjectReorder,
+            NativeMethods.EventObjectLocationChange
+        };
+
+        var hooks = new nint[events.Length];
+        for (var index = 0; index < events.Length; index++)
+        {
+            hooks[index] = NativeMethods.SetWinEventHook(
+                events[index],
+                events[index],
+                nint.Zero,
+                callback,
+                0,
+                0,
+                NativeMethods.WineventOutofcontext);
+        }
+
+        return hooks;
+    }
+
+    private void OnWindowChanged(
         nint hWinEventHook,
         uint eventType,
         nint hwnd,
@@ -100,14 +136,50 @@ public sealed class CornerOverlayService : IDisposable
         uint idEventThread,
         uint dwmsEventTime)
     {
-        var now = Environment.TickCount64;
-        if (now - _lastKeepVisibleTicks < 250)
+        if (_disposed || idObject != NativeMethods.ObjIdWindow)
         {
             return;
         }
 
-        _lastKeepVisibleTicks = now;
-        _dispatcherQueue.TryEnqueue(KeepVisible);
+        RequestVisibilityRefresh();
+    }
+
+    private void RequestVisibilityRefresh()
+    {
+        var now = Environment.TickCount64;
+        if (now - _lastRefreshRequestTicks < 75)
+        {
+            return;
+        }
+
+        _lastRefreshRequestTicks = now;
+        _dispatcherQueue.TryEnqueue(() =>
+        {
+            if (_disposed || _windows.Count == 0)
+            {
+                return;
+            }
+
+            KeepVisible();
+            _remainingRecoveryTicks = RecoveryBurstCount;
+
+            if (!_visibilityTimer.IsRunning)
+            {
+                _visibilityTimer.Start();
+            }
+        });
+    }
+
+    private void OnVisibilityTimerTick(DispatcherQueueTimer sender, object args)
+    {
+        if (_disposed || _windows.Count == 0 || _remainingRecoveryTicks <= 0)
+        {
+            sender.Stop();
+            return;
+        }
+
+        KeepVisible();
+        _remainingRecoveryTicks--;
     }
 
     private void Clear()
